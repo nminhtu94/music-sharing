@@ -46,7 +46,7 @@ public class FileTableModel extends AbstractTableModel {
         // Add download speed, status and selection.
         switch (columnIndex) {
             case 0: {
-                return f.getFile().getName();
+                return f.getFilename();
             }
 
             case 1: {

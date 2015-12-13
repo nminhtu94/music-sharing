@@ -190,7 +190,6 @@ public class MusicSharingForm extends JFrame {
 
     private void onRequestHost() {
         String hostIP = requestHostIPTxf.getText();
-
         // TODO: Request host IP.
     }
 

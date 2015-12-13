@@ -12,6 +12,18 @@ public class MusicFileModel {
         file = f;
     }
 
+    private String filename;
+    public String getFilename() {
+        if (file != null) {
+            return file.getName();
+        } else {
+            return filename;
+        }
+    }
+    public void setFilename(String value) {
+        filename = value;
+    }
+
     // Network speed.
     private float networkSpeed;
     public float getNetworkSpeed() {
@@ -67,6 +79,13 @@ public class MusicFileModel {
 
     public MusicFileModel(File f, String hostIP, int port) {
         setFile(f);
+        setHostIP(hostIP);
+        setPort(port);
+        setSelected(false);
+    }
+
+    public MusicFileModel(String filename, String hostIP, int port) {
+        setFilename(filename);
         setHostIP(hostIP);
         setPort(port);
         setSelected(false);
