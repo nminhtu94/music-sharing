@@ -3,6 +3,7 @@ package filetable;
 import java.io.File;
 
 public class MusicFileModel {
+    // The music file.
     private File file;
     public File getFile() {
         return file;
@@ -11,6 +12,7 @@ public class MusicFileModel {
         file = f;
     }
 
+    // Network speed.
     private float networkSpeed;
     public float getNetworkSpeed() {
         return networkSpeed;
@@ -19,6 +21,7 @@ public class MusicFileModel {
         networkSpeed = speed;
     }
 
+    // Host IP.
     private String hostIP;
     public String getHostIP() {
         return hostIP;
@@ -27,6 +30,7 @@ public class MusicFileModel {
         hostIP = ip;
     }
 
+    // Port.
     private int port;
     public int getPort() {
         return port;
@@ -35,12 +39,22 @@ public class MusicFileModel {
         this.port = port;
     }
 
+    // Is selecting for action.
     private boolean selected;
     public boolean isSelected() {
         return selected;
     }
     public void setSelected(boolean value) {
         selected = value;
+    }
+
+    // Progress.
+    private float progress;
+    public float getProgress() {
+        return progress;
+    }
+    public void setProgress(float value) {
+        progress = value;
     }
 
     public MusicFileModel() {
