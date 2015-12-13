@@ -48,13 +48,12 @@ public class MusicFileModel {
         selected = value;
     }
 
-    // Progress.
-    private float progress;
-    public float getProgress() {
-        return progress;
+    private String status;
+    public String getStatus() {
+        return status;
     }
-    public void setProgress(float value) {
-        progress = value;
+    public void setStatus(String value) {
+        status = value;
     }
 
     public MusicFileModel() {

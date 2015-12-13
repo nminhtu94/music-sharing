@@ -31,6 +31,15 @@ public class MusicSharingForm extends JFrame {
     private JButton addBtn;
     private JButton deleteBtn;
 
+    private JList hostList;
+    private JButton addHostButton;
+    private JTextField addHostIPTxf;
+    private JButton requestHostBtn;
+    private JTextField requestHostIPTxf;
+    private JSplitPane hostControlPane;
+
+    private ArrayList<String> hostListData;
+
     final static private JFileChooser fileChooser = new JFileChooser();
     static private Path musicDirectory;
 
@@ -43,12 +52,15 @@ public class MusicSharingForm extends JFrame {
         setVisible(true);
 
         fileSplitPane.setDividerLocation(0.5);
+        hostControlPane.setDividerLocation(0.5);
 
         selectFolderBtn.addActionListener(handler -> fileChooserHandler());
         searchBtn.addActionListener(handler -> onSearch());
         updatePortBtn.addActionListener(handler -> onUpdatePort());
         addBtn.addActionListener(handler -> onAddMusic());
         deleteBtn.addActionListener(handler -> onDeleteMusic());
+        addHostButton.addActionListener(handler -> onAddHost());
+        requestHostBtn.addActionListener(handler -> onRequestHost());
 
         remoteFileTable = new FileTable();
         remoteFileTable.setRowSelectionAllowed(false);
@@ -82,8 +94,20 @@ public class MusicSharingForm extends JFrame {
                 }
             }
         });
+
         scrollLocalFileList.getViewport().setView(localFileTable);
+        scrollLocalFileList.setPreferredSize(new Dimension(scrollLocalFileList.getWidth(), 250));
+
         scrollRemoteFileList.getViewport().setView(remoteFileTable);
+        scrollRemoteFileList.setPreferredSize(new Dimension(scrollRemoteFileList.getWidth(), 250));
+
+        hostList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        hostList.setVisibleRowCount(-1);
+        hostList.setLayoutOrientation(JList.VERTICAL);
+
+        // TODO: Initialize host list.
+        hostListData = new ArrayList<String>(Arrays.asList("127.0.0.1", "127.0.0.2"));
+        hostList.setListData(hostListData.toArray());
     }
 
     private void fileChooserHandler() {
@@ -155,6 +179,19 @@ public class MusicSharingForm extends JFrame {
         ArrayList<MusicFileModel> allFiles = getAllMusicFiles(musicDirectory.toString());
         ((FileTableModel) localFileTable.getModel()).setData(allFiles);
         ((FileTableModel) localFileTable.getModel()).fireTableDataChanged();
+    }
+
+    private void onAddHost() {
+        String hostIP = addHostIPTxf.getText();
+        hostListData.add(hostIP);
+        hostList.setListData(hostListData.toArray());
+        // TODO: Add host IP to list.
+    }
+
+    private void onRequestHost() {
+        String hostIP = requestHostIPTxf.getText();
+
+        // TODO: Request host IP.
     }
 
     private ArrayList<MusicFileModel> getAllMusicFiles(String directoryPath) {

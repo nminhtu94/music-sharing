@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class FileTableModel extends AbstractTableModel {
-    private final String[] columnNames = new String[] {"File name", "Speed", "Status", "Progress", " "};
+    private final String[] columnNames = new String[] {"File name", "Host IP", "Status", " "};
     private ArrayList<MusicFileModel> data;
 
     public FileTableModel(ArrayList<MusicFileModel> data) {
@@ -50,18 +50,14 @@ public class FileTableModel extends AbstractTableModel {
             }
 
             case 1: {
-                return "100 Kb/s";
+                return f.getHostIP();
             }
 
             case 2: {
-                return "Uploading";
+                return f.getStatus();
             }
 
             case 3: {
-                return "50%";
-            }
-
-            case 4: {
                 return f.isSelected();
             }
         }
@@ -73,7 +69,7 @@ public class FileTableModel extends AbstractTableModel {
     }
 
     public boolean isCellEditable(int row, int col) {
-        if (col == 4) {
+        if (col == 3) {
             return true;
         } else {
             return false;
@@ -81,7 +77,7 @@ public class FileTableModel extends AbstractTableModel {
     }
 
     public void setValueAt(Object value, int row, int col) {
-        if (col == 4) {
+        if (col == 3) {
             if (data.get(row).isSelected()) {
                 data.get(row).setSelected(false);
             } else {

@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.io.File;
+import java.util.ArrayList;
 
 public class FileTable extends JTable {
     public interface FileTableListener {
@@ -23,12 +24,18 @@ public class FileTable extends JTable {
         fileTableModel.addTableModelListener(new FileTableModelListener());
         this.setModel(fileTableModel);
 
-        getColumn("File name").setPreferredWidth(300);
-        getColumn("Speed").setPreferredWidth(60);
+        getColumn("File name").setPreferredWidth(420);
         getColumn("Status").setPreferredWidth(60);
-        getColumn("Progress").setPreferredWidth(60);
         setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         setRowHeight(25);
+    }
+
+    public ArrayList<MusicFileModel> getFileList() {
+        return fileTableModel.getData();
+    }
+
+    public void reloadData() {
+        fileTableModel.fireTableDataChanged();
     }
 
     private class FileTableModelListener implements TableModelListener {
