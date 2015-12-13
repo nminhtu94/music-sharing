@@ -6,27 +6,15 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class FileTableModel extends AbstractTableModel {
-    private final String[] columnNamesDownload = new String[] {"File name", "Speed", "Status", "Action"};
-    private final String[] columnNamesNormal = new String[] {"File name", "Speed", "Status"};
-    private String[] columnNames;
+    private final String[] columnNames = new String[] {"File name", "Speed", "Status", "Select"};
     private ArrayList<File> data;
 
-    public FileTableModel(ArrayList<File> data, boolean hasAction) {
+    public FileTableModel(ArrayList<File> data) {
         this.data = data;
-        if (hasAction) {
-            columnNames = columnNamesDownload;
-        } else {
-            columnNames = columnNamesNormal;
-        }
     }
 
-    public FileTableModel(boolean hasAction) {
+    public FileTableModel() {
         this.data = new ArrayList<>();
-        if (hasAction) {
-            columnNames = columnNamesDownload;
-        } else {
-            columnNames = columnNamesNormal;
-        }
     }
 
     public ArrayList<File> getData() {
@@ -54,6 +42,8 @@ public class FileTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         File f = data.get(rowIndex);
+        // TODO: Modify data for this file:
+        // Add download speed, status and selection.
         switch (columnIndex) {
             case 0: {
                 return f.getName();
@@ -68,7 +58,7 @@ public class FileTableModel extends AbstractTableModel {
             }
 
             case 3: {
-                return new JButton();
+                return true;
             }
         }
         return null;
@@ -76,5 +66,17 @@ public class FileTableModel extends AbstractTableModel {
 
     public Class getColumnClass(int col) {
         return getValueAt(0, col).getClass();
+    }
+
+    public boolean isCellEditable(int row, int col) {
+        if (col == 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setValueAt(Object value, int row, int col) {
+        fireTableCellUpdated(row, col);
     }
 }

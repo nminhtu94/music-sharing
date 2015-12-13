@@ -1,14 +1,26 @@
 package filetable;
 
 import javax.swing.*;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import java.io.File;
 
 public class FileTable extends JTable {
+    public interface FileTableListener {
+        void onFileSelected(FileTable sender, File f);
+    }
+
     private FileTableModel fileTableModel;
 
-    public FileTable(boolean hasAction) {
+    private FileTableListener tableListener;
+    public void setTableListener(FileTableListener tableListener) {
+        this.tableListener = tableListener;
+    }
+
+    public FileTable() {
         super();
-        fileTableModel = new FileTableModel(hasAction);
+        fileTableModel = new FileTableModel();
+        fileTableModel.addTableModelListener(new FileTableModelListener());
         this.setModel(fileTableModel);
 
         getColumn("File name").setPreferredWidth(300);
@@ -18,11 +30,17 @@ public class FileTable extends JTable {
         setRowHeight(25);
     }
 
-    @Override
-    public TableCellRenderer getCellRenderer(int row, int column) {
-        if (getColumnName(column).equalsIgnoreCase("Action")) {
-            return new DownloadButtonCellRenderer();
+    private class FileTableModelListener implements TableModelListener {
+        @Override
+        public void tableChanged(TableModelEvent e) {
+            int row = e.getFirstRow();
+            FileTableModel model = (FileTableModel) e.getSource();
+
+            File f = model.getData().get(row);
+
+            if (tableListener != null) {
+                tableListener.onFileSelected(FileTable.this, f);
+            }
         }
-        return super.getCellRenderer(row, column);
     }
 }

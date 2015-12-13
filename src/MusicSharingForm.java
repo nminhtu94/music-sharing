@@ -19,6 +19,10 @@ public class MusicSharingForm extends JFrame {
     private JSplitPane fileSplitPane;
     private JScrollPane scrollLocalFileList;
     private JScrollPane scrollRemoteFileList;
+    private JTextField searchTxf;
+    private JButton searchBtn;
+    private JTextField portTxf;
+    private JButton updatePortBtn;
 
     final static private JFileChooser fileChooser = new JFileChooser();
 
@@ -37,13 +41,13 @@ public class MusicSharingForm extends JFrame {
 
 
         selectFolderBtn.addActionListener(handler -> fileChooserHandler());
+        searchBtn.addActionListener(handler -> onSearch());
+        updatePortBtn.addActionListener(hander -> onUpdatePort());
 
-        localFileTable = new FileTable(false);
-        remoteFileTable = new FileTable(true);
+        remoteFileTable = new FileTable();
+        localFileTable = new FileTable();
         scrollLocalFileList.getViewport().setView(localFileTable);
         scrollRemoteFileList.getViewport().setView(remoteFileTable);
-
-        
     }
 
     private void fileChooserHandler() {
@@ -59,6 +63,17 @@ public class MusicSharingForm extends JFrame {
         }
     }
 
+    private void onSearch() {
+        String query = searchTxf.getText();
+        // TODO: Start search.
+    }
+
+    private void onUpdatePort() {
+        int port = Integer.parseInt(portTxf.getText());
+
+        // TODO: Update port.
+    }
+
     private ArrayList<File> getAllMusicFiles(String directoryPath) {
         File folder = new File(directoryPath);
         File[] listOfFiles = folder.listFiles();
@@ -71,7 +86,6 @@ public class MusicSharingForm extends JFrame {
                 System.out.println(listOfFiles[i].getAbsolutePath());
             }
         }
-
         return fileNames;
     }
 }
